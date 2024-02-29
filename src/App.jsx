@@ -2,7 +2,7 @@ import MainContent from "./components/layout/RootLayout";
 
 function App() {
   return (
-    <div className="container mx-auto font-sans font-medium text-white">
+    <div className="lg:container mx-auto font-sans font-medium text-white">
       <MainContent />
     </div>
   );

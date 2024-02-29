@@ -10,8 +10,8 @@ export default function ContentHeader() {
       </div>
       <div className="basis-1/3 grow grid grid-cols-2 ">
         <div className="flex justify-end gap-2 items-center">
-          <div className="flex justify-center items-center ">
-            <i className="fa-solid fa-arrow-down text-[#cbcbcb] rounded-full p-4 bg-[#18448f]"></i>
+          <div className="flex justify-center items-center rounded-full p-4 w-12 h-12 bg-[#18448f]">
+            <i className="fa-solid fa-arrow-down text-[#cbcbcb]"></i>
           </div>
           <p>
             <div className="text-[#9ca1ab]">Min</div>
@@ -19,8 +19,8 @@ export default function ContentHeader() {
           </p>
         </div>
         <div className="flex justify-end gap-2 items-center">
-          <div className="flex justify-center items-center">
-            <i className="fa-solid fa-arrow-up text-[#cbcbcb] rounded-full p-4 bg-[#18448f]"></i>
+          <div className="flex justify-center items-center rounded-full p-4 w-12 h-12 bg-[#18448f]">
+            <i className="fa-solid fa-arrow-up text-[#cbcbcb]"></i>
           </div>
           <p>
             <div className="text-[#9ca1ab]">Max</div>

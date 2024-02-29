@@ -1,11 +1,15 @@
 import ContentHeader from "../ContentHeader";
-import WeatherInfomation from "../WeatherInfomation";
+import HourlyWeather from "../hourly-weather/HourlyWeather";
+import WeatherInfomation from "../weather-infomation/WeatherInfomation";
+import WeekdaysWeather from "../weekdays-weather/WeekdaysWeather";
 
 export default function RootLayout() {
   return (
-    <main className="mx-32">
+    <main className="xl:mx-32 lg:mx-0">
       <ContentHeader />
       <WeatherInfomation />
+      <HourlyWeather />
+      <WeekdaysWeather />
     </main>
   );
 }
