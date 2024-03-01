@@ -33,7 +33,9 @@ export default function WeekdaysWeatherSection() {
     <Section>
       <div className="flex justify-between items-center mb-5">
         <H2>This week</H2>
-        <Button onClick={toggleView}>{btnIcon}</Button>
+        <Button onClick={toggleView} size={12}>
+          {btnIcon}
+        </Button>
       </div>
       {view && <WeekdaysGridView />}
       {!view && <WeekdaysTableView />}

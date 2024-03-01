@@ -1,6 +1,6 @@
-export default function ContentHeader() {
+export default function CurrentWeather() {
   return (
-    <header className="flex flex-row py-10 px-5">
+    <div className="flex flex-row py-10 px-5">
       <div className="basis-1/4 grow flex items-center justify-center">
         <i className="fa-solid fa-sun fa-10x animate-[spin-slow_20s_linear_infinite] text-[#fbbf24]"></i>
       </div>
@@ -35,6 +35,6 @@ export default function ContentHeader() {
           Feels like 25&deg;
         </p>
       </div>
-    </header>
+    </div>
   );
 }

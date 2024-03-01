@@ -1,11 +1,7 @@
-import MainContent from "./components/layout/RootLayout";
+import RootLayout from "./components/layout/RootLayout";
 
 function App() {
-  return (
-    <div className="lg:container mx-auto font-sans font-medium text-gray-50">
-      <MainContent />
-    </div>
-  );
+  return <RootLayout />;
 }
 
 export default App;

@@ -1,5 +1,4 @@
-import Button from "../../ui/Button";
-import WeekdaysDetails from "./WeekdaysDetails";
+import InfoButton from "./InfoButton";
 
 /* eslint-disable react/prop-types */
 export default function WeekdaysGridItem({ date, details, temperatureRange }) {
@@ -17,13 +16,7 @@ export default function WeekdaysGridItem({ date, details, temperatureRange }) {
         <div className="mb-3">
           <p className="flex justify-between items-center">
             <span className="font-bold">{date.dayWeek}</span>
-            <Button>
-              <i
-                className="fa-solid fa-circle-info fa-lg"
-                style={{ color: "#ababab" }}
-              ></i>
-            </Button>
-            <WeekdaysDetails details={details} />
+            <InfoButton details={details} />
           </p>
           <p className="text-[0.8rem]">{date.dayMonth}</p>
         </div>
