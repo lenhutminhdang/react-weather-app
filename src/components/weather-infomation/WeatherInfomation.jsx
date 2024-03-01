@@ -54,7 +54,7 @@ export default function WeatherInfomation() {
       <WeatherInfomationItem
         icon={
           <i
-            className="fa-solid fa-feather px-5"
+            className="fa-solid fa-arrow-trend-up px-5"
             style={{ color: "#ccebf4" }}
           ></i>
         }

@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
-export default function Button({ children }) {
+export default function Button({ children, onClick }) {
   return (
     <button
-      className={`bg-[#1a4691] flex justify-center items-center rounded-full h-10 w-10`}
+      onClick={onClick}
+      className={`bg-[#1a4691] hover:bg-[#09274b] flex justify-center items-center rounded-full h-10 w-10`}
     >
       {children}
     </button>
