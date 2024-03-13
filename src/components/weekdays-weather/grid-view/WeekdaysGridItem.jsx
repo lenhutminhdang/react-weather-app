@@ -1,42 +1,67 @@
+import {
+  formatDateIntl,
+  formatNumber,
+  getWeatherCodeDayNight,
+  toFahrenheit,
+} from "../../../utils/utils";
 import InfoButton from "./InfoButton";
+import IconWeather from "../../ui/IconWeather";
+import useWeather from "../../../hooks/useWeather";
 
 /* eslint-disable react/prop-types */
-export default function WeekdaysGridItem({ date, details, temperatureRange }) {
+export default function WeekdaysGridItem({ dailyWeather }) {
+  const { isFahrenheit } = useWeather();
+  const weatherCodeDayNight = getWeatherCodeDayNight(
+    dailyWeather.values.weatherCodeMax,
+    dailyWeather.time
+  );
+  const weather = {
+    dayweek: formatDateIntl(dailyWeather.time, "dayweek"),
+    daymonth: formatDateIntl(dailyWeather.time, "day-month"),
+    temperatureMin: isFahrenheit
+      ? formatNumber(toFahrenheit(dailyWeather.values.temperatureMin))
+      : formatNumber(dailyWeather.values.temperatureMin),
+    temperatureMax: isFahrenheit
+      ? formatNumber(toFahrenheit(dailyWeather.values.temperatureMax))
+      : formatNumber(dailyWeather.values.temperatureMax),
+  };
+
   return (
-    <li className="bg-[#143f8c] text-[#cbcbcb] flex items-center gap-3 p-3 rounded-lg">
+    <li className="dark:bg-[#143f8c] bg-blue-100 dark:text-[#cbcbcb] flex items-center gap-2 p-3 rounded-lg">
       {/* ICON */}
-      <i
-        className="fa-solid fa-cloud fa-4x p-3"
-        style={{ color: "#efefef" }}
-      ></i>
+      <div className="w-10 sm:w-20 md:p-1 sm:m-0">
+        <IconWeather weatherCode={weatherCodeDayNight} />
+      </div>
 
       {/* DESCRIPTION */}
-      <div className="grow shrink">
+      <div className="grow shrink flex flex-col justify-between">
         {/* - TOP */}
-        <div className="mb-3">
-          <p className="flex justify-between items-center">
-            <span className="font-bold">{date.dayWeek}</span>
-            <InfoButton details={details} />
-          </p>
-          <p className="text-[0.8rem]">{date.dayMonth}</p>
+        <div className="mb-3 flex justify-between">
+          <div>
+            <p className="font-bold text-xl sm:text-lg">{weather.dayweek}</p>
+            <p className="sm:text-[0.8rem] text-base sm:-mt-1">
+              {weather.daymonth}
+            </p>
+          </div>
+          <InfoButton dailyWeather={dailyWeather} />
         </div>
 
         {/* - BOTTOM */}
         <div className="flex">
           <p className="grow">
             <span className="block text-3xl font-bold">
-              {temperatureRange.min}&deg;
+              {weather.temperatureMin}&deg;
             </span>
-            <span className="text-[0.75rem] block -translate-y-[0.25rem]">
+            <span className="sm:text-[0.75rem] text-md block -translate-y-[0.25rem]">
               min
             </span>
           </p>
 
           <p className="grow">
             <span className="block text-3xl font-bold">
-              {temperatureRange.max}&deg;
+              {weather.temperatureMax}&deg;
             </span>
-            <span className="text-[0.75rem] block -translate-y-[0.25rem]">
+            <span className="sm:text-[0.75rem] text-md block -translate-y-[0.25rem]">
               max
             </span>
           </p>

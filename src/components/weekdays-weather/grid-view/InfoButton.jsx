@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import Button from "../../ui/Button";
 import WeekdaysDetails from "./WeekdaysDetails";
 
-export default function InfoButton({ details }) {
+export default function InfoButton({ dailyWeather }) {
   const tooltipRef = useRef();
   const [tooltipIsShow, setTooltipIsShow] = useState(false);
 
@@ -27,13 +27,12 @@ export default function InfoButton({ details }) {
 
   return (
     <div className="relative">
-      <Button onClick={handleTooltipToggle} size={12}>
-        <i
-          className="fa-solid fa-circle-info fa-lg"
-          style={{ color: "#ababab" }}
-        ></i>
+      <Button onClick={handleTooltipToggle} sizeClass="w-10 h-10">
+        <i className="fa-solid fa-circle-info text-xl dark:text-[#ababab] text-gray-500"></i>
       </Button>
-      {tooltipIsShow && <WeekdaysDetails ref={tooltipRef} details={details} />}
+      {tooltipIsShow && (
+        <WeekdaysDetails ref={tooltipRef} dailyWeather={dailyWeather} />
+      )}
     </div>
   );
 }

@@ -1,25 +1,30 @@
 /* eslint-disable react/display-name */
 import { forwardRef } from "react";
+import SettingItem from "./SettingItem";
+import useDarkMode from "../../hooks/useDarkMode";
+import useWeather from "../../hooks/useWeather";
 
-const Setting = forwardRef((props, ref) => {
-  console.log("SETTINg");
+const Setting = forwardRef((_, ref) => {
+  const { isFahrenheit, toggleTemperature } = useWeather();
+  const { darkMode, toggleDarkMode } = useDarkMode();
+
   return (
     <div
-      className="bg-[#021e3e] absolute right-0 z-50 translate-y-2 flex flex-col w-64 rounded-md overflow-hidden cursor-pointer"
+      className="dark:bg-[#021e3e] bg-white shadow-[0_2px_12px_4px_rgba(0,0,0,0.1)] absolute right-0 z-50 translate-y-2 flex flex-col w-[18rem] md:[16.5rem] rounded-md overflow-hidden cursor-pointer"
       ref={ref}
     >
-      <p className="flex justify-between items-center gap-3 p-3 hover:bg-[#072a66] ease-in-out duration-100">
-        <i className="fa-solid fa-moon"></i>
-        {/* <i class="fa-solid fa-sun"></i> */}
-        <span className="grow text-gray-100 font-bold">Dark</span>
-        <span className="grow text-right text-gray-300">(Ctrl + K)</span>
-      </p>
-
-      <p className="flex justify-between items-center gap-3 p-3 hover:bg-[#072a66] ease-in-out duration-100">
-        <i className="fa-solid fa-temperature-three-quarters"></i>
-        <span className="grow text-gray-100 font-bold">Celsius</span>
-        <span className="grow text-right text-gray-300">(Ctrl + U)</span>
-      </p>
+      <SettingItem
+        onClick={toggleDarkMode}
+        label={darkMode ? "Light" : "Dark"}
+        shortcut="Alt + K"
+        icon={<i className={`fa-solid fa-${darkMode ? "sun" : "moon"}`}></i>}
+      />
+      <SettingItem
+        onClick={toggleTemperature}
+        label={isFahrenheit ? "Celsius" : "Fahrenheit"}
+        shortcut="Alt + U"
+        icon={<i className="fa-solid fa-temperature-three-quarters"></i>}
+      />
     </div>
   );
 });

@@ -1,55 +1,16 @@
 import WeekdaysGridItem from "./WeekdaysGridItem";
+import useWeather from "../../../hooks/useWeather";
 
 export default function WeekdaysGridView() {
-  const dummyDate = {
-    dayWeek: "FRI",
-    dayMonth: "16 SEP",
-  };
+  const { dailyWeathers } = useWeather();
 
-  const dummyRange = {
-    min: 24,
-    max: 38,
-  };
-
-  const dummyDetails = {
-    wind: 23,
-    rainChance: 100,
-    humidity: 44,
-    pressure: 1009,
-  };
+  const dailyWeathers6 = dailyWeathers.timelines.daily.slice(0, 6);
 
   return (
-    <ul className="grid grid-cols-3 gap-3">
-      <WeekdaysGridItem
-        date={dummyDate}
-        temperatureRange={dummyRange}
-        details={dummyDetails}
-      />
-      <WeekdaysGridItem
-        date={dummyDate}
-        temperatureRange={dummyRange}
-        details={dummyDetails}
-      />
-      <WeekdaysGridItem
-        date={dummyDate}
-        temperatureRange={dummyRange}
-        details={dummyDetails}
-      />
-      <WeekdaysGridItem
-        date={dummyDate}
-        temperatureRange={dummyRange}
-        details={dummyDetails}
-      />
-      <WeekdaysGridItem
-        date={dummyDate}
-        temperatureRange={dummyRange}
-        details={dummyDetails}
-      />
-      <WeekdaysGridItem
-        date={dummyDate}
-        temperatureRange={dummyRange}
-        details={dummyDetails}
-      />
+    <ul className="grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3">
+      {dailyWeathers6.map((weather) => (
+        <WeekdaysGridItem key={weather.time} dailyWeather={weather} />
+      ))}
     </ul>
   );
 }

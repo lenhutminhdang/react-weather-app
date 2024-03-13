@@ -5,7 +5,7 @@ import HourlyList from "./HourlyList";
 export default function HourlyWeatherSection() {
   return (
     <Section>
-      <H2 className="mb-5">Hourly</H2>
+      <H2 className="mb-5 sm:mb-4">Hourly</H2>
       <HourlyList />
     </Section>
   );

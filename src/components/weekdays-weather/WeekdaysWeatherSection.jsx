@@ -14,26 +14,20 @@ export default function WeekdaysWeatherSection() {
   };
 
   let btnIcon = (
-    <i
-      className="fa-solid fa-table-list fa-lg"
-      style={{ color: "#ababab" }}
-    ></i>
+    <i className="fa-solid fa-table-list text-2xl sm:text-lg dark:text-[#ababab] text-gray-500"></i>
   );
 
   if (!view) {
     btnIcon = (
-      <i
-        className="fa-solid fa-border-all fa-lg"
-        style={{ color: "#ababab" }}
-      ></i>
+      <i className="fa-solid fa-border-all text-2xl sm:text-lg dark:text-[#ababab] text-gray-500"></i>
     );
   }
 
   return (
     <Section>
       <div className="flex justify-between items-center mb-5">
-        <H2>This week</H2>
-        <Button onClick={toggleView} size={12}>
+        <H2>Weekly</H2>
+        <Button onClick={toggleView} sizeClass="w-14 sm:w-12 h-14 sm:h-12">
           {btnIcon}
         </Button>
       </div>

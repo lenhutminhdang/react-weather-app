@@ -1,38 +1,67 @@
+import {
+  formatNumber,
+  getWeatherCodeDayNight,
+  toFahrenheit,
+} from "../../utils/utils";
+import IconWeather from "../ui/IconWeather";
+import { weatherStatusMapping } from "../../utils/mapping";
+import MinMaxTemperature from "./MinMaxTemperature";
+import useWeather from "../../hooks/useWeather";
+
 export default function CurrentWeather() {
+  const { todayWeather, dailyWeathers, isFahrenheit } = useWeather();
+
+  const weatherCodeDayNight = getWeatherCodeDayNight(
+    todayWeather.data.values.weatherCode,
+    todayWeather.data.time
+  );
+
+  let animation = "animate-fade-in-out"; // for other icon
+  if (weatherCodeDayNight === 10000) {
+    animation = "animate-spin-slow"; // for clear sun only
+  }
+
+  const weather = {
+    code: weatherCodeDayNight,
+    status: weatherStatusMapping[weatherCodeDayNight],
+    temperature: isFahrenheit
+      ? toFahrenheit(todayWeather.data.values.temperature)
+      : todayWeather.data.values.temperature,
+    temperatureApparent: isFahrenheit
+      ? toFahrenheit(todayWeather.data.values.temperatureApparent)
+      : todayWeather.data.values.temperatureApparent,
+    min: isFahrenheit
+      ? toFahrenheit(dailyWeathers.timelines.daily[0].values.temperatureMin)
+      : dailyWeathers.timelines.daily[0].values.temperatureMin,
+    max: isFahrenheit
+      ? toFahrenheit(dailyWeathers.timelines.daily[0].values.temperatureMax)
+      : dailyWeathers.timelines.daily[0].values.temperatureMax,
+  };
+
   return (
-    <div className="flex flex-row py-10 px-5">
-      <div className="basis-1/4 grow flex items-center justify-center">
-        <i className="fa-solid fa-sun fa-10x animate-[spin-slow_20s_linear_infinite] text-[#fbbf24]"></i>
-      </div>
-
-      <div className="basis-1/3 grow flex flex-col justify-between">
-        <p className="text-9xl font-bold">26&deg;</p>
-        <p className="text-xl text-[#cbcbcb]">Clear skies, possible cyclone</p>
-      </div>
-
-      <div className="basis-1/3 grow grid grid-cols-2 ">
-        <div className="flex justify-end gap-2 items-center">
-          <div className="flex justify-center items-center rounded-full p-4 w-12 h-12 bg-[#18448f]">
-            <i className="fa-solid fa-arrow-down text-[#cbcbcb]"></i>
+    <div className="flex flex-col md:flex-row md:justify-between gap-5 mb-8 sm:mb-6 md:ml-10">
+      <div className="grid grid-cols-2 sm:grid-cols-7 justify-center items-center gap-10 sm:gap-0 md:gap-12 sm:mb-6">
+        <div className="sm:col-span-3 flex items-center justify-end sm:justify-center">
+          <div className={`${animation}`}>
+            <IconWeather weatherCode={weather.code} />
           </div>
-          <p>
-            <div className="text-[#9ca1ab]">Min</div>
-            <div className="text-4xl font-bold">23&deg;</div>
-          </p>
         </div>
 
-        <div className="flex justify-end gap-2 items-center">
-          <div className="flex justify-center items-center rounded-full p-4 w-12 h-12 bg-[#18448f]">
-            <i className="fa-solid fa-arrow-up text-[#cbcbcb]"></i>
-          </div>
-          <p>
-            <div className="text-[#9ca1ab]">Max</div>
-            <div className="text-4xl font-bold">30&deg;</div>
+        <div className="sm:col-span-4 flex flex-col justify-start">
+          <p className="text-7xl sm:text-8xl md:text-[7.25rem] font-bold mb-2">
+            {formatNumber(weather.temperature)}&deg;
+          </p>
+          <p className="text-2xl sm:text-[1.3rem] dark:text-[#cbcbcb] text-gray-600">
+            {weather.status}
           </p>
         </div>
+      </div>
 
-        <p className="col-span-2 text-[#e67052] text-xl text-right self-end">
-          Feels like 25&deg;
+      <div className="grid justify-center items-center grid-cols-2 sm:grid-cols-3 md:grid-cols-2 gap-10 sm:gap-0 md:gap-x-5 md:max-[940px]:gap-x-12">
+        <MinMaxTemperature type="min" temperature={formatNumber(weather.min)} />
+        <MinMaxTemperature type="max" temperature={formatNumber(weather.max)} />
+        <p className="text-[#e67052] text-xl sm:text-lg md:text-xl text-center sm:text-left sm:mt-0 col-span-2 sm:col-span-1 md:col-span-2 md:justify-self-end">
+          Feels like {formatNumber(weather.temperatureApparent)}&deg;
         </p>
       </div>
     </div>

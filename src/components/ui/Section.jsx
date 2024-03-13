@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 export default function Section({ children }) {
-  return <section className="px-5 mb-9">{children}</section>;
+  return <section className="px-1 sm:mb-10 mb-12">{children}</section>;
 }

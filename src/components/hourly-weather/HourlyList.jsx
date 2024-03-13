@@ -1,96 +1,20 @@
 import HourlyItem from "./HourlyItem";
+import useWeather from "../../hooks/useWeather";
 
 export default function HourlyList() {
+  const { hourlyWeathers } = useWeather();
+  const hourlyWeathers8 = hourlyWeathers.timelines.hourly.slice(0, 8);
+
   return (
-    <ul className="flex gap-3">
-      <HourlyItem
-        time={7}
-        unit="AM"
-        temperature={26}
-        icon={
-          <i
-            className="fa-solid fa-sun fa-3x pb-4"
-            style={{ color: "#fbbf24" }}
-          ></i>
-        }
-      />
-      <HourlyItem
-        time={7}
-        unit="AM"
-        temperature={26}
-        icon={
-          <i
-            className="fa-solid fa-sun fa-3x pb-4"
-            style={{ color: "#fbbf24" }}
-          ></i>
-        }
-      />
-      <HourlyItem
-        time={7}
-        unit="AM"
-        temperature={26}
-        icon={
-          <i
-            className="fa-solid fa-sun fa-3x pb-4"
-            style={{ color: "#fbbf24" }}
-          ></i>
-        }
-      />
-      <HourlyItem
-        time={7}
-        unit="AM"
-        temperature={26}
-        icon={
-          <i
-            className="fa-solid fa-sun fa-3x pb-4"
-            style={{ color: "#fbbf24" }}
-          ></i>
-        }
-      />
-      <HourlyItem
-        time={7}
-        unit="AM"
-        temperature={26}
-        icon={
-          <i
-            className="fa-solid fa-sun fa-3x pb-4"
-            style={{ color: "#fbbf24" }}
-          ></i>
-        }
-      />
-      <HourlyItem
-        time={7}
-        unit="AM"
-        temperature={26}
-        icon={
-          <i
-            className="fa-solid fa-sun fa-3x pb-4"
-            style={{ color: "#fbbf24" }}
-          ></i>
-        }
-      />
-      <HourlyItem
-        time={7}
-        unit="AM"
-        temperature={26}
-        icon={
-          <i
-            className="fa-solid fa-sun fa-3x pb-4"
-            style={{ color: "#fbbf24" }}
-          ></i>
-        }
-      />
-      <HourlyItem
-        time={7}
-        unit="AM"
-        temperature={26}
-        icon={
-          <i
-            className="fa-solid fa-sun fa-3x pb-4"
-            style={{ color: "#fbbf24" }}
-          ></i>
-        }
-      />
+    <ul className="grid sm:grid-cols-8 grid-cols-4 sm:gap-[0.3rem] gap-2 md:gap-3">
+      {hourlyWeathers8.map((weather) => (
+        <HourlyItem
+          key={weather.time}
+          time={weather.time}
+          temperature={weather.values.temperature}
+          weatherCode={weather.values.weatherCode}
+        />
+      ))}
     </ul>
   );
 }
