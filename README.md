@@ -2,10 +2,7 @@
 
 ![boltweather website](https://boltweather06.netlify.app/boltweather-description.png)
 
-Stack:
-
-- React
-- TailwindCSS
+Build with: React and TailwindCSS.
 
 I have initiated this project for the sake of my own learning journey.
 
