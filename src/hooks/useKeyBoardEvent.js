@@ -29,6 +29,7 @@ export default function useKeyBoardEvent() {
     } else {
       // set temperature unit = celsius by default
       localStorage.setItem(TEMPERATURE_UNITS, CELSIUS);
+      setIsFahrenheit(false);
     }
   }, [setIsFahrenheit]);
 
