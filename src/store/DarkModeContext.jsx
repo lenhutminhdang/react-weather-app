@@ -30,7 +30,7 @@ const DarkModeProvider = ({ children }) => {
       document.documentElement.classList.remove("dark");
       setDarkMode(false);
     } else {
-      // darkmode by default
+      // set darkmode by default
       localStorage.setItem("theme", "dark");
       document.documentElement.classList.add("dark");
       setDarkMode(true);

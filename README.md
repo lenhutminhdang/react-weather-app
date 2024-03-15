@@ -1,8 +1,13 @@
-# React + Vite
+# BoltWeather
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Stack:
 
-Currently, two official plugins are available:
+- React
+- TailwindCSS
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+I have initiated this project for the sake of my own learning journey.
+
+Owned by: [Minh Dang](https://github.com/lenhutminhdang) (Github)
+Demo: [boltweather](https://boltweather06.netlify.app) (Website)
+
+Designed by: [Tom Watts](https://dribbble.com/shots/22394240-Bolt-Weather-App-Dark-Mode) (Dribbble)
