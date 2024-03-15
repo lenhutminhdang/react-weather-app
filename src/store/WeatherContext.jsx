@@ -3,9 +3,13 @@
 import { fakeWeatherData } from "../utils/fakeWeatherData";
 import { getWeatherAlert } from "../utils/utils";
 
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useCallback } from "react";
 import useHttp from "../hooks/useHttp";
 import useLocation from "../hooks/useLocation";
+
+const TEMPERATURE_UNITS = "temperatureUnit";
+const CELSIUS = "celsius";
+const FAHRENHEIT = "fahrenheit";
 
 const WeatherContext = createContext({
   currentWeather: {},
@@ -39,6 +43,7 @@ const WeatherContextProvider = ({ children }) => {
     locationError,
     setLocationError,
   } = useLocation();
+
   const {
     data,
     setIsLoading: setHttpIsLoading,
@@ -47,9 +52,6 @@ const WeatherContextProvider = ({ children }) => {
     setError: setHttpError,
     timeout,
   } = useHttp(location.lat, location.long);
-
-  const toggleTemperature = () =>
-    setIsFahrenheit((isFahrenheit) => !isFahrenheit);
 
   const setFakeWeatherData = () => {
     setWeather(fakeWeatherData);
@@ -69,6 +71,30 @@ const WeatherContextProvider = ({ children }) => {
       setWeather(fakeWeatherData);
     }
   }, [data.current, data.daily, data.hourly]);
+
+  // WORKING WITH LOCAL STORAGE
+  const toggleTemperature = useCallback(() => {
+    if (isFahrenheit) {
+      setIsFahrenheit(false);
+      localStorage.setItem(TEMPERATURE_UNITS, CELSIUS);
+    } else if (!isFahrenheit) {
+      setIsFahrenheit(true);
+      localStorage.setItem(TEMPERATURE_UNITS, FAHRENHEIT);
+    }
+  }, [isFahrenheit, setIsFahrenheit]);
+
+  // Get setting data from local storage on first load
+  useEffect(() => {
+    if (localStorage.getItem(TEMPERATURE_UNITS) === CELSIUS) {
+      setIsFahrenheit(false);
+    } else if (localStorage.getItem(TEMPERATURE_UNITS) === FAHRENHEIT) {
+      setIsFahrenheit(true);
+    } else {
+      // set temperature unit = celsius by default
+      localStorage.setItem(TEMPERATURE_UNITS, CELSIUS);
+      setIsFahrenheit(false);
+    }
+  }, [setIsFahrenheit]);
 
   return (
     <WeatherContext.Provider
