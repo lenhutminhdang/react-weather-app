@@ -26,7 +26,7 @@ export default function DailyWeatherSection() {
   return (
     <Section>
       <div className="flex justify-between items-center mb-5">
-        <H2>Weekly</H2>
+        <H2>Daily</H2>
         <Button onClick={toggleView} sizeClass="w-14 sm:w-12 h-14 sm:h-12">
           {btnIcon}
         </Button>
