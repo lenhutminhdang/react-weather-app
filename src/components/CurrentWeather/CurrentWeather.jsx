@@ -58,7 +58,7 @@ export default function CurrentWeather() {
         </div>
       </div>
 
-      <div className="grid justify-center items-center grid-cols-2 sm:grid-cols-3 md:grid-cols-2 gap-10 sm:gap-0 md:gap-x-5 md:max-[940px]:gap-x-12">
+      <div className="grid justify-center items-center grid-cols-2 sm:grid-cols-3 md:grid-cols-2 gap-10 sm:gap-0 md:gap-x-5 md:max-[940px]:gap-x-10 md:px-4">
         <MinMaxTemperature type="min" temperature={formatNumber(weather.min)} />
         <MinMaxTemperature type="max" temperature={formatNumber(weather.max)} />
         <p className="text-[#e67052] text-xl sm:text-lg md:text-xl text-center sm:text-left sm:mt-0 col-span-2 sm:col-span-1 md:col-span-2 md:justify-self-end">
