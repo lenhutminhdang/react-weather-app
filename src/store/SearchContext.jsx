@@ -24,14 +24,6 @@ export const SearchContextProvider = ({ children }) => {
     city.name.toLowerCase().trim().includes(searchTerm.toLowerCase().trim())
   );
 
-  const changeCity = (id) => {
-    setCurrentCityId(id);
-  };
-
-  const searchTermOnChange = (newValue) => {
-    setSearchTerm(newValue);
-  };
-
   const searchTermOnClick = (id) => {
     const _city = findItemById(id);
     setSearchTerm(_city.name);
@@ -39,9 +31,9 @@ export const SearchContextProvider = ({ children }) => {
 
   const searchContext = {
     city: currentCity,
-    changeCity,
+    changeCity: setCurrentCityId,
     searchTerm,
-    searchTermOnChange,
+    searchTermOnChange: setSearchTerm,
     searchTermOnClick,
     searchResults,
   };

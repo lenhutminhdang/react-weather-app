@@ -1,45 +1,50 @@
-import CurrentWeather from "./current-weather/CurrentWeather";
-import HourlyWeatherSection from "./hourly-weather/HourlyWeatherSection";
-import WeatherAlertSection from "./weather-alert/WeatherAlertSection";
-import WeatherInfomation from "./weather-infomation/WeatherInfomation";
-import WeekdaysWeatherSection from "./weekdays-weather/WeekdaysWeatherSection";
-import SearchBar from "./search-bar/SearchBar";
-import NotFound from "./NotFound";
-import useWeather from "../hooks/useWeather";
+import MainNavigation from "./MainNavigation";
+import CurrentWeather from "./CurrentWeather/CurrentWeather";
+
+import TodayWeatherSection from "./TodayWeather/TodayWeatherSection";
+import HourlyWeatherSection from "./HourlyWeather/HourlyWeatherSection";
+import DailyWeatherSection from "./DailyWeather/DailyWeatherSection";
+import WeatherAlertSection from "./WeatherAlert/WeatherAlertSection";
+
 import Footer from "./Footer";
 import Loader from "./Loader";
+import Error from "./Error";
+import useWeather from "../hooks/useWeather";
+import { SearchContextProvider } from "../store/SearchContext";
 
 export default function RootLayout() {
-  const { error, isLoadingWeatherData } = useWeather();
+  const { location, http } = useWeather();
 
   let content = (
     <>
       <header>
         <CurrentWeather />
-        <WeatherInfomation />
+        <TodayWeatherSection />
       </header>
       <main>
         <HourlyWeatherSection />
-        <WeekdaysWeatherSection />
+        <DailyWeatherSection />
         <WeatherAlertSection />
       </main>
       <Footer />
     </>
   );
 
-  if (isLoadingWeatherData) {
-    content = <Loader />;
+  if (location.error || http.error) {
+    content = <Error />;
   }
-  if (error && !isLoadingWeatherData) {
-    content = <NotFound />;
+  if (location.isLoading || http.isLoading) {
+    content = <Loader />;
   }
 
   return (
-    <div className="font-sans font-medium h-screen">
-      <div className="container max-w-5xl mt-10 md:mt-8 flex flex-col">
-        <SearchBar />
-        {content}
+    <SearchContextProvider>
+      <div className="font-sans font-medium h-screen">
+        <div className="container max-w-5xl flex flex-col">
+          <MainNavigation />
+          {content}
+        </div>
       </div>
-    </div>
+    </SearchContextProvider>
   );
 }

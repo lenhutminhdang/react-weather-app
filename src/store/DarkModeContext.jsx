@@ -12,11 +12,11 @@ const DarkModeProvider = ({ children }) => {
   // User change theme
   const toggleDarkMode = () => {
     if (darkMode) {
-      setDarkMode(false); // to non-darkmode
+      setDarkMode(false);
       localStorage.setItem("theme", "light");
     }
     if (!darkMode) {
-      setDarkMode(true); // to darkmode
+      setDarkMode(true);
       localStorage.setItem("theme", "dark");
     }
   };

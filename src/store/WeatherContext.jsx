@@ -1,91 +1,95 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
-import { createContext, useEffect, useState } from "react";
 import { fakeWeatherData } from "../utils/fakeWeatherData";
-
 import { getWeatherAlert } from "../utils/utils";
+
+import { createContext, useEffect, useState } from "react";
 import useHttp from "../hooks/useHttp";
 import useLocation from "../hooks/useLocation";
 
 const WeatherContext = createContext({
-  todayWeather: {},
+  currentWeather: {},
   dailyWeathers: {},
   hourlyWeathers: {},
   isFahrenheit: false,
   toggleTemperature() {},
   alert: {},
-  error: null,
   setFakeWeatherData() {},
-  isLoadingWeatherData: false,
+  isUsingFakeData: false,
+  http: {
+    isLoading: false,
+    error: null,
+  },
+  location: {
+    isLoading: false,
+    error: null,
+  },
 });
 
 const WeatherContextProvider = ({ children }) => {
   const [isFahrenheit, setIsFahrenheit] = useState(false);
-  const [weather, setWeather] = useState({
-    current: null,
-    daily: null,
-    hourly: null,
-  });
-  const [error, setError] = useState();
-
-  const { location } = useLocation();
-  const locationError = location.error;
+  const [isUsingFakeData, setIsUsingFakeData] = useState(false);
+  const [weather, setWeather] = useState();
 
   const {
+    location,
+    setLocationLoading,
+    locationLoading,
+    locationError,
+    setLocationError,
+  } = useLocation();
+  const {
     data,
-    error: apiError,
-    isLoading: isLoadingWeatherData,
-    setIsLoading: setIsLoadingWeatherData,
-    fetchDataAndUpdateState,
-  } = useHttp(location.coords);
+    setIsLoading: setHttpIsLoading,
+    isLoading: httpLoading,
+    error: httpError,
+    setError: setHttpError,
+    timeout,
+  } = useHttp(location.lat, location.long);
 
   const toggleTemperature = () =>
     setIsFahrenheit((isFahrenheit) => !isFahrenheit);
 
   const setFakeWeatherData = () => {
     setWeather(fakeWeatherData);
-    setError(null);
+    setIsUsingFakeData(true);
+    setLocationLoading(false);
+    setHttpIsLoading(false);
+    setHttpError(null);
+    setLocationError(null);
+    clearTimeout(timeout.ref);
   };
 
   useEffect(() => {
-    fetchDataAndUpdateState();
-  }, [fetchDataAndUpdateState]);
-
-  useEffect(() => {
-    if (apiError) {
-      setError(apiError);
-    }
-    if (locationError) {
-      setError(locationError);
-    }
     if (data.current && data.daily && data.hourly) {
-      setError(null);
-      setIsLoadingWeatherData(false);
       setWeather(data);
+      setIsUsingFakeData(false);
+    } else {
+      setWeather(fakeWeatherData);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, apiError, locationError]);
-
-  const todayWeather = weather.current || fakeWeatherData.current;
-  const dailyWeathers = weather.daily || fakeWeatherData.daily;
-  const hourlyWeathers = weather.hourly || fakeWeatherData.hourly;
-
-  // const alert = getWeatherAlert(80000);
-  const alert = getWeatherAlert(todayWeather.data.values.weatherCode);
-
-  const weatherContext = {
-    todayWeather,
-    dailyWeathers,
-    hourlyWeathers,
-    isFahrenheit,
-    toggleTemperature,
-    alert,
-    error,
-    setFakeWeatherData,
-    isLoadingWeatherData,
-  };
+  }, [data.current, data.daily, data.hourly]);
 
   return (
-    <WeatherContext.Provider value={weatherContext}>
+    <WeatherContext.Provider
+      value={{
+        currentWeather: weather?.current || fakeWeatherData.current,
+        dailyWeathers: weather?.daily || fakeWeatherData.daily,
+        hourlyWeathers: weather?.hourly || fakeWeatherData.hourly,
+        isFahrenheit,
+        toggleTemperature,
+        alert: getWeatherAlert(weather?.current.data.values.weatherCode),
+        setFakeWeatherData,
+        isUsingFakeData,
+        http: {
+          isLoading: httpLoading,
+          error: httpError,
+        },
+        location: {
+          isLoading: locationLoading,
+          error: locationError,
+        },
+      }}
+    >
       {children}
     </WeatherContext.Provider>
   );
