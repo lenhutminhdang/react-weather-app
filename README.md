@@ -14,10 +14,10 @@ In file src\hooks\useHttp.js:
 
 Replace `import.meta.env.VITE_API_KEY` with your API key
 
+---
+
 Owned by: [Minh Dang](https://github.com/lenhutminhdang) (Github)
 
 Demo: [boltweather06.netlify.app](https://boltweather06.netlify.app) (Website)
-
----
 
 Designed by: [Tom Watts](https://dribbble.com/shots/22394240-Bolt-Weather-App-Dark-Mode) (Dribbble)
